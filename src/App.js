@@ -5,15 +5,16 @@ import Person from './Person/Person';
 class App extends Component {
   state = {
     persons: [
-      { name: "Ryan", age: 36 },
-      { name: "Manu", age: 30 },
-      { name: "Stephanie", age: 28 }
+      { id: 'qwe', name: "Ryan", age: 36 },
+      { id: 'asd', name: "Manu", age: 30 },
+      { id: 'zxc', name: "Stephanie", age: 28 }
     ],
     showPersons: false
   }
 
   deletePersonHandler = (personIndex) => {
-    const persons = this.state.persons;
+    // const persons = this.state.persons.slice(); // Vanilla JS
+    const persons = [...this.state.persons]; // ES6 Spread operator
     persons.splice(personIndex, 1);
     this.setState({persons: persons});
   }
@@ -54,6 +55,7 @@ class App extends Component {
                         click={() => this.deletePersonHandler(index)}
                         name={person.name}
                         age={person.age}
+                        key={person.id}
                       />
             })
           }
