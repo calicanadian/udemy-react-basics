@@ -4,6 +4,14 @@ import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    console.log('[App.js] constructor');
+    // you can set state here if you're working with an older
+    // project that doesn't support init of state outside of
+    // the constructor
+  }
+
   state = {
     persons: [
       { id: 'qwe', name: "Ryan", age: 36 },
@@ -11,6 +19,15 @@ class App extends Component {
       { id: 'zxc', name: "Stephanie", age: 28 }
     ],
     showPersons: false
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    console.log('[App.js] getDerivedStateFromProps', props);
+    return state;
+  }
+
+  componentDidMount() {
+    console.log('[App.js] componentDidMount');
   }
 
   deletePersonHandler = (personIndex) => {
@@ -31,7 +48,7 @@ class App extends Component {
     };
 
     // alternative Vanilla JS approach
-    // const person = Objec.assign({}, this.state.persons[personIndex]);
+    // const person = Object.assign({}, this.state.persons[personIndex]);
 
     person.name = event.target.value;
 
@@ -48,7 +65,7 @@ class App extends Component {
   }
 
   render() {
-
+    console.log('[App.js] render');
     let persons = null;
     if (this.state.showPersons) {
       persons = <Persons
