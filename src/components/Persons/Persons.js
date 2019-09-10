@@ -1,15 +1,26 @@
 import React, { Component } from 'react';
 import Person from './Person/Person';
 
+// If you want to compare ALL props agains nextProps, extend PureComponent
 class Persons extends Component {
   // static getDerivedStateFromProps(props, state) {
   //   console.log('[Persons.js] getDerivedStateFromProps');
   //   return state;
   // }
 
+  // You should use shouldComponentUpdate if you are comparing the state of certain props to nextProps (extends Component)
+  // If you want to compare ALL props agains nextProps (extends PureComponent)
   shouldComponentUpdate(nextProps, nextState) {
     console.log('[Persons.js] shouldComponentUpdate');
-    return true; // return true if you want to continue updating, false if it should stop.
+    // return true if you want to continue updating, false if it should stop.
+    if (nextProps.persons !== this.props.persons ||
+        nextProps.changed !== this.props.changed ||
+        nextProps.clicked !== this.props.clicked
+      ) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
@@ -20,6 +31,10 @@ class Persons extends Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     console.log('[Persons.js] componentDidUpdate');
     console.log(snapshot);
+  }
+
+  componentWillUnmount() {
+    console.log('[Persons.js] componentWillUnmount');
   }
 
   render() {
